@@ -100,6 +100,17 @@ curl -sS -o github_setup.py https://raw.githubusercontent.com/reegen66/gprsa/mai
 print_animated "Making github_setup.py script executable..." "yellow"
 chmod +x github_setup.py
 
+# Check if .gprsa already exists
+if [ -f .gprsa ]; then
+    print_animated ".gprsa file already exists. Do you want to overwrite it? (y/n): " "yellow"
+    read -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        print_animated "Existing .gprsa file will be kept. When ready, run: ./github_setup.py" "blue"
+        exit 0
+    fi
+fi
+
 print_animated "Do you want to enter your GitHub token and email now? (y/n): " "blue"
 read -n 1 -r
 echo
@@ -117,12 +128,12 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     print_animated "Executing github_setup.py script..." "green"
     ./github_setup.py
 else
-    # Create empty .gprsa file in the current directory
-    touch .gprsa
-    print_animated "An empty .gprsa file has been created in the current directory." "yellow"
+    # Create .gprsa file with placeholders in the current directory
+    echo "GITHUB_TOKEN=" > .gprsa
+    echo "GITHUB_EMAIL=" >> .gprsa
+    print_animated "A .gprsa file with placeholders has been created in the current directory." "yellow"
     print_animated "Please add your GITHUB_TOKEN and GITHUB_EMAIL to .gprsa" "yellow"
     print_animated "Once you've added the information, run: ./github_setup.py" "blue"
 fi
-
 
 print_animated "Setup completed successfully." "green"
