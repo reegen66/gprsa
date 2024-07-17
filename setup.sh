@@ -42,7 +42,7 @@ fi
 print_animated "This script will set up your GitHub environment." "blue"
 print_animated "Detected OS: $OS" "yellow"
 read -p "Do you want to proceed with the installation? (y/n): " -n 1 -r
-echo
+echo    # This empty echo will consume the newline left in the buffer
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     print_animated "Installation cancelled." "red"
     exit 1
