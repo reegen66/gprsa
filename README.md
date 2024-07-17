@@ -11,7 +11,7 @@ This Python script automates the entire process of setting up a new **private Gi
 1. **Creates a new private GitHub repository** with a name you specify.
 2. **Initializes Git** in your local project directory.
 3. **Sets up remote origin** and links it to the new GitHub repository.
-4. **Downloads a language-specific `.gitignore` file** (Python or Node.js).
+4. **Downloads a language-specific `.gitignore` template file** (Python or Node.js).
 5. **Allows you to add custom entries** to the `.gitignore` file.
 6. **Performs an initial commit** with all your project files.
 7. **Pushes the commit** to the new GitHub repository.
