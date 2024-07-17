@@ -64,7 +64,7 @@ wget https://raw.githubusercontent.com/reegen66/gprsa/main/github_setup.py
 pip install requests python-dotenv
 ```
 
-3. Create a `.env` file in the same directory as the script with the following content:
+3. Create a `.gprsa` file in the same directory as the script with the following content:
 
 ```
 GITHUB_TOKEN=your_personal_access_token_here
@@ -115,7 +115,7 @@ To use this script, you need to create a GitHub Personal Access Token with the c
 9. Scroll to the bottom and click "Generate token".
 10. **Important:** Copy the generated token immediately and store it securely. You won't be able to see it again!
 
-Once you have your token, add it to your `.env` file like this:
+Once you have your token, add it to your `.gprsa` file like this:
 
 ```
 GITHUB_TOKEN=your_generated_token_here
@@ -124,7 +124,44 @@ GITHUB_EMAIL=your_github_email@example.com
 
 Replace `your_generated_token_here` with the actual token you just created, and `your_github_email@example.com` with the email associated with your GitHub account.
 
-**Security Note:** Never share your personal access token or commit it to a repository. The `.env` file is included in the `.gitignore` to prevent accidental exposure of your token.
+**Security Note:** Never share your personal access token or commit it to a repository. The `.gprsa` file is included in the `.gitignore` to prevent accidental exposure of your token.
+
+## Cloning Private Repositories
+
+This script streamlines the process of cloning private GitHub repositories while maintaining security and handling potential conflicts. Here's how it works:
+
+### Features
+
+- **Secure Authentication**: Uses your GitHub token stored in `.gprsa` for authentication, ensuring secure access to private repositories.
+- **Temporary Directory Cloning**: Clones the repository to a temporary directory first, preventing conflicts with existing files.
+- **Conflict Resolution**: Automatically handles potential conflicts with existing files and directories.
+- **Environment File Handling**: Renames any `.env` file from the cloned repository to `.env_repo` to avoid overwriting your local configuration.
+- **Git Configuration**: Sets up the local git configuration with your email and username.
+
+### Process
+
+1. **User Input**: You'll be prompted to enter the URL of the private repository you want to clone.
+
+2. **Secure Cloning**: The script uses your GitHub token from `.gprsa` to clone the repository into a temporary directory.
+
+3. **File Transfer**: Contents from the cloned repository are carefully moved to your current directory:
+   - Existing `.git` directory is removed to avoid conflicts.
+   - Any `.env` file from the repository is renamed to `.env_repo`.
+   - Other files are moved, replacing any existing files with the same name.
+
+4. **Git Setup**: The script sets up the local git configuration using your GitHub email.
+
+5. **Completion**: Once the process is complete, you'll have a fully functional local copy of the private repository, ready for development.
+
+### Benefits
+
+- **Simplicity**: Clone private repositories with a single command, no need to manually handle authentication or potential conflicts.
+- **Security**: Your GitHub token is never exposed in plain text during the process.
+- **Consistency**: Ensures a consistent setup process across different machines or team members.
+- **Local Config Preservation**: Keeps your local `.gprsa` and `.env` files intact, preserving your local settings and authentication.
+
+By using this script to clone private repositories, you can quickly set up your development environment while maintaining security and avoiding common pitfalls in the process.
+
 
 ## Why This Is Useful
 
@@ -178,7 +215,7 @@ By automating the GitHub project setup process, this script not only saves a tre
 If you encounter any issues:
 
 - Ensure your GitHub token has the necessary permissions to create repositories.
-- Check that your `.env` file is in the correct location and contains the right information.
+- Check that your `.gprsa` file is in the correct location and contains the right information.
 - Make sure you have a stable internet connection.
 
 ## Contributing
