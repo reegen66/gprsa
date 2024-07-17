@@ -1,4 +1,4 @@
-# Automated GitHub Project Setup Script
+# Automated Private GitHub Project/Repository Setup Script
 
 This powerful Python script automates the process of setting up a new GitHub repository, making it easier than ever to start a new coding project. Whether you're a seasoned developer or just starting out, this tool streamlines your workflow by handling repository creation, Git initialization, and initial commits all in one go.
 
