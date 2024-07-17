@@ -20,7 +20,7 @@ print_animated() {
     echo -ne "${color_code}"
     for (( i=0; i<${#text}; i++ )); do
         echo -n "${text:$i:1}"
-        sleep 0.01  # Increased speed from 0.03 to 0.01 for faster animation
+        sleep 0.01  # Increased animation speed from 0.03 to 0.01
     done
     echo -e "\033[0m"
 }
@@ -54,16 +54,15 @@ if ! command_exists pip; then
     case "$OS" in
         *Ubuntu*|*Debian*)
             print_animated "Suggested command: sudo apt-get update && sudo apt-get install -y python3-pip" "blue"
-            sudo apt-get update >/dev/null
-            sudo apt-get install -y python3-pip >/dev/null
+            sudo apt-get update >/dev/null && sudo apt-get install -y python3-pip
             ;;
         *Fedora*)
             print_animated "Suggested command: sudo dnf install -y python3-pip" "blue"
-            sudo dnf install -y python3-pip >/dev/null
+            sudo dnf install -y python3-pip
             ;;
         *CentOS*|*RHEL*)
             print_animated "Suggested command: sudo yum install -y python3-pip" "blue"
-            sudo yum install -y python3-pip >/dev/null
+            sudo yum install -y python3-pip
             ;;
         *)
             print_animated "Error: Unsupported OS. Please install pip manually." "red"
@@ -73,10 +72,10 @@ if ! command_exists pip; then
 fi
 
 print_animated "Installing requests and python-dotenv..." "green"
-pip install requests python-dotenv >/dev/null
+pip install requests python-dotenv >/dev/null 2>&1  # Suppress pip output
 
 print_animated "Downloading github_setup.py script..." "blue"
-curl -sSLO https://raw.githubusercontent.com/reegen66/gprsa/main/github_setup.py
+curl -sS -o github_setup.py https://raw.githubusercontent.com/reegen66/gprsa/main/github_setup.py
 
 print_animated "Making github_setup.py script executable..." "yellow"
 chmod +x github_setup.py
