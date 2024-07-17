@@ -54,7 +54,7 @@ To get started with the GitHub Project Setup Script, follow these steps:
 
 1. One line command:
 ```bash
-curl -sSL https://raw.githubusercontent.com/reegen66/gprsa/main/setup.sh | bash
+curl -sSL https://raw.githubusercontent.com/reegen66/gprsa/main/setup.sh -o setup.sh && bash setup.sh
 ``` 
 
 Or step by syep
