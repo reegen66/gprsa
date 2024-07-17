@@ -6,7 +6,7 @@ This powerful Python script automates the process of setting up a new GitHub rep
 
 ## What it does
 
-This Python script automates the entire process of setting up a new GitHub project:
+This Python script automates the entire process of setting up a new **private GitHub** project:
 
 1. **Creates a new private GitHub repository** with a name you specify.
 2. **Initializes Git** in your local project directory.
