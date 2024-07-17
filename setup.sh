@@ -20,7 +20,7 @@ print_animated() {
     echo -ne "${color_code}"
     for (( i=0; i<${#text}; i++ )); do
         echo -n "${text:$i:1}"
-        sleep 0.01  # Increased animation speed from 0.03 to 0.01
+        sleep 0.005
     done
     echo -e "\033[0m"
 }
@@ -38,31 +38,24 @@ else
     OS=$(uname -s)
 fi
 
-# Ask for user confirmation
-print_animated "This script will set up your GitHub environment." "blue"
+print_animated "Checking system and requirements..." "blue"
 print_animated "Detected OS: $OS" "yellow"
-read -p "Do you want to proceed with the installation? (y/n): " -n 1 -r
-echo    # This empty echo will consume the newline left in the buffer
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    print_animated "Installation cancelled." "red"
-    exit 1
-fi
 
-# Check if pip is installed
+missing_deps=()
+install_commands=()
+
+# Check for pip
 if ! command_exists pip; then
-    print_animated "pip is not installed. Installing..." "yellow"
+    missing_deps+=("pip")
     case "$OS" in
         *Ubuntu*|*Debian*)
-            print_animated "Suggested command: sudo apt-get update && sudo apt-get install -y python3-pip" "blue"
-            sudo apt-get update >/dev/null && sudo apt-get install -y python3-pip
+            install_commands+=("sudo apt-get update && sudo apt-get install -y python3-pip")
             ;;
         *Fedora*)
-            print_animated "Suggested command: sudo dnf install -y python3-pip" "blue"
-            sudo dnf install -y python3-pip
+            install_commands+=("sudo dnf install -y python3-pip")
             ;;
         *CentOS*|*RHEL*)
-            print_animated "Suggested command: sudo yum install -y python3-pip" "blue"
-            sudo yum install -y python3-pip
+            install_commands+=("sudo yum install -y python3-pip")
             ;;
         *)
             print_animated "Error: Unsupported OS. Please install pip manually." "red"
@@ -71,8 +64,35 @@ if ! command_exists pip; then
     esac
 fi
 
-print_animated "Installing requests and python-dotenv..." "green"
-pip install requests python-dotenv >/dev/null 2>&1  # Suppress pip output
+# Check for Python libraries
+if ! pip show requests python-dotenv >/dev/null 2>&1; then
+    missing_deps+=("Python libraries (requests, python-dotenv)")
+    install_commands+=("pip install requests python-dotenv")
+fi
+
+if [ ${#missing_deps[@]} -ne 0 ]; then
+    print_animated "The following dependencies are missing:" "yellow"
+    for dep in "${missing_deps[@]}"; do
+        print_animated "- $dep" "yellow"
+    done
+    print_animated "The following commands will be used to install them:" "blue"
+    for cmd in "${install_commands[@]}"; do
+        print_animated "$ $cmd" "blue"
+    done
+    print_animated "Do you want to proceed with the installation? (y/n): " "green"
+    read -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        for cmd in "${install_commands[@]}"; do
+            eval $cmd
+        done
+    else
+        print_animated "Installation cancelled. Please install the missing dependencies manually." "red"
+        exit 1
+    fi
+else
+    print_animated "All required dependencies are already installed." "green"
+fi
 
 print_animated "Downloading github_setup.py script..." "blue"
 curl -sS -o github_setup.py https://raw.githubusercontent.com/reegen66/gprsa/main/github_setup.py
@@ -80,7 +100,6 @@ curl -sS -o github_setup.py https://raw.githubusercontent.com/reegen66/gprsa/mai
 print_animated "Making github_setup.py script executable..." "yellow"
 chmod +x github_setup.py
 
-# Ask user if they want to enter GitHub token and email now
 print_animated "Do you want to enter your GitHub token and email now? (y/n): " "blue"
 read -n 1 -r
 echo
@@ -90,19 +109,20 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     print_animated "Please enter your GitHub email: " "yellow"
     read -r github_email
     
-    # Create .gprsa file with the provided information
-    echo "GITHUB_TOKEN=$github_token" > ~/.gprsa
-    echo "GITHUB_EMAIL=$github_email" >> ~/.gprsa
+    # Create .gprsa file with the provided information in the current directory
+    echo "GITHUB_TOKEN=$github_token" > .gprsa
+    echo "GITHUB_EMAIL=$github_email" >> .gprsa
     
-    print_animated "GitHub token and email have been saved to ~/.gprsa" "green"
+    print_animated "GitHub token and email have been saved to .gprsa in the current directory" "green"
     print_animated "Executing github_setup.py script..." "green"
     ./github_setup.py
 else
-    # Create empty .gprsa file
-    touch ~/.gprsa
-    print_animated "An empty ~/.gprsa file has been created." "yellow"
-    print_animated "Please add your GITHUB_TOKEN and GITHUB_EMAIL to ~/.gprsa" "yellow" 
-    print_animated "Once you've added the information, run ./github_setup.py" "blue"
+    # Create empty .gprsa file in the current directory
+    touch .gprsa
+    print_animated "An empty .gprsa file has been created in the current directory." "yellow"
+    print_animated "Please add your GITHUB_TOKEN and GITHUB_EMAIL to .gprsa" "yellow"
+    print_animated "Once you've added the information, run: ./github_setup.py" "blue"
 fi
+
 
 print_animated "Setup completed successfully." "green"
