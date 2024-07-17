@@ -101,7 +101,7 @@ else
     # Create empty .gprsa file
     touch ~/.gprsa
     print_animated "An empty ~/.gprsa file has been created." "yellow"
-    print_animated "Please add your GITHUB_TOKEN and GITHUB_EMAIL to ~/.gprsa" "yellow"
+    print_animated "Please add your GITHUB_TOKEN and GITHUB_EMAIL to ~/.gprsa" "yellow" 
     print_animated "Once you've added the information, run ./github_setup.py" "blue"
 fi
 
