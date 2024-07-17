@@ -1,4 +1,4 @@
-# Automated GitHub Private Project/Repository Setup/Creator
+# Automated GitHub Private Project/Repository Setup/Creator/Automator
 
 This powerful Python script automates the process of setting up a new GitHub repository, making it easier than ever to start a new coding project. Whether you're a seasoned developer or just starting out, this tool streamlines your workflow by handling repository creation, Git initialization, and initial commits all in one go.
 
@@ -55,7 +55,7 @@ To get started with the GitHub Project Setup Script, follow these steps:
 1. Download the script using `wget`:
 
 ```bash
-wget https://raw.githubusercontent.com/reegen66/agprc/main/github_setup.py
+wget https://raw.githubusercontent.com/reegen66/gprsa/main/github_setup.py
 ```
 
 2. Install the required Python packages:
