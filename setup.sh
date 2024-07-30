@@ -49,13 +49,13 @@ if ! command_exists pip; then
     missing_deps+=("pip")
     case "$OS" in
         *Ubuntu*|*Debian*)
-            install_commands+=("sudo apt-get update && sudo apt-get install -y python3-pip")
+            install_commands+=("sudo apt-get update && sudo apt-get install -y python3-pip && pip install python-dotenv")
             ;;
         *Fedora*)
-            install_commands+=("sudo dnf install -y python3-pip")
+            install_commands+=("sudo dnf install -y python3-pip && pip install python-dotenv")
             ;;
         *CentOS*|*RHEL*)
-            install_commands+=("sudo yum install -y python3-pip")
+            install_commands+=("sudo yum install -y python3-pip && pip install python-dotenv")
             ;;
         *)
             print_animated "Error: Unsupported OS. Please install pip manually." "red"
