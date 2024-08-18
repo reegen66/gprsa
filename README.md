@@ -9,7 +9,7 @@ curl -sSL https://raw.githubusercontent.com/reegen66/gprsa/main/setup.sh -o setu
 
 # GitHub Private Repository Setup Automator
 
-## What it does
+## What it does  
 
 This Python script automates the entire process of setting up a new **private GitHub** project:
 
@@ -222,21 +222,14 @@ This significant time saving allows developers to focus on actual coding and pro
 
 By automating the GitHub project setup process, this script not only saves a tremendous amount of time but also ensures consistency, reduces errors, and allows developers to focus on what truly matters – writing great code.
 
-## Troubleshooting
-
-If you encounter any issues:
-
-- Ensure your GitHub token has the necessary permissions to create repositories.
-- Check that your `.gprsa` file is in the correct location and contains the right information.
-- Make sure you have a stable internet connection.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. 
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. 
 
 ## Keywords
 
